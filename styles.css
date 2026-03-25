@@ -1,0 +1,933 @@
+/* ================================
+   styles.css — Nadhirah & Aimran
+   Theme: clean white (#fff) + deep red (#a30000)
+   Fonts already loaded in HTML:
+   - Cormorant Garamond (main elegant serif)
+   - Montserrat (UI)
+   - Amiri (Arabic / doa if needed)
+   NOTE: "Snell Roundhand" is a system font (iOS/macOS). If not available,
+   it will fall back to other script fonts.
+================================ */
+
+/* ---------- CSS Reset (lightweight) ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #111;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; display: block; }
+button, input, select, textarea { font: inherit; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid rgba(163,0,0,.25); outline-offset: 3px; }
+
+/* ---------- Theme Variables ---------- */
+:root{
+  --bg: #ffffff;
+  --ink: #111111;
+  --muted: rgba(17,17,17,.62);
+  --muted2: rgba(17,17,17,.45);
+  --line: rgba(17,17,17,.10);
+
+  --red: #a30000;
+
+  --card-bg: #ffffff;
+  --shadow: 0 18px 45px rgba(0,0,0,.08);
+
+  --radius: 20px;
+  --radius2: 26px;
+
+  --maxw: 430px;    /* phone-first */
+  --pad: 20px;
+
+  /* Typography scale (web-friendly) */
+  --cg: "Cormorant Garamond", serif;
+  --ui: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --amiri: "Amiri", serif;
+
+  /* Snell-ish script */
+  --script: "Snell Roundhand", "Snell Roundhand Script", "Apple Chancery",
+            "Zapfino", "Brush Script MT", "Segoe Script", cursive;
+}
+
+/* ---------- Layout ---------- */
+main { width: 100%; }
+.section{
+  padding: 5px 16px;
+  display: flex;
+  justify-content: center;
+}
+.card{
+  position: relative;
+  width: min(var(--maxw), calc(100% - 0px));
+  background: var(--card-bg);
+  border-radius: var(--radius2);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  padding: 26px 22px;
+  border: 1px solid rgba(0,0,0,.06);
+}
+
+/* Optional subtle paper vibe (very light) */
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(1200px 500px at 50% 0%, rgba(0,0,0,.025), transparent 55%),
+    radial-gradient(900px 500px at 50% 100%, rgba(0,0,0,.02), transparent 60%);
+  opacity:.9;
+}
+
+/* ---------- Utilities ---------- */
+.hidden{ display:none !important; }
+.center{ text-align:center; }
+.w-full{ width:100%; }
+.subtle{
+  color: var(--muted);
+  margin-top: 18px;
+  font-family: var(--ui);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.para{
+  margin: 0;
+  font-family: var(--cg);
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(17,17,17,.80);
+}
+.divider{
+  height: 1px;
+  background: var(--line);
+  margin: 18px 0;
+}
+
+/* ---------- Fade-in Reveal ---------- */
+.fade-in{
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.fade-in.visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================
+   SECTION 1: COVER PHOTO
+========================= */
+.hero .card{
+  padding: 0;
+  background: #fff;
+}
+.cover-wrap{
+  width: 100%;
+  border-radius: var(--radius2);
+  overflow: hidden;
+}
+.cover-img{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* =========================
+   WALIMA CARD (SECTION 2)
+   Keep continuity with first design:
+   - Clean white
+   - Elegant serif
+   - Deep red accents
+========================= */
+
+/* The “first card” typography sizes (converted to web-friendly):
+   - WALIMATUL URUS ~ 12.3pt
+   - DENGAN IZIN ALLAH ~ 6.3pt
+   - ALIF AIMRAN / WAN NADHIRAH ~ 16.5pt
+   - & ~ 21pt (script)
+   - Date ~ 8.6pt
+   - Venue ~ 6.3pt
+   For web: use clamp() so it looks good on different phones.
+*/
+.walima-title{
+  margin-top: 18px;
+  text-align: center;
+  letter-spacing: .30em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: clamp(14px, 3.6vw, 18px);
+  color: rgba(17,17,17,.78);
+}
+
+.walima-salam{
+  margin-top: 18px;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: var(--cg);
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(17,17,17,.72);
+}
+
+.walima-invite{
+  margin-top: 5px;
+  text-align: center;
+  font-family: var(--cg);
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(17,17,17,.72);
+}
+
+.walima-parents{
+  margin-top: 14px;
+  text-align: center;
+  font-family: var(--cg);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  font-size: 13px;
+  color: rgba(17,17,17,.78);
+}
+.walima-parent{ 
+  margin: 6px 0;
+  font-family: var(--cg);
+  color: rgba(17,17,17,.86);
+  font-weight: 500;
+}
+.walima-and{
+  color: var(--red);
+  letter-spacing: .18em;
+}
+
+.walima-to{
+  text-align: center;
+  font-family: var(--cg);
+  font-size: 15px;
+  color: rgba(17,17,17,.72);
+}
+
+.walima-couple{
+  margin-top: 20px;
+  text-align: center;
+  padding-top: 10px;
+}
+.couple-name{
+  font-family: var(--cg);
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 18px;
+  color: rgba(17,17,17,.86);
+  margin: 5px 0;
+}
+.walima-with{
+  font-family: var(--cg);
+  font-size: 14px;
+  color: rgba(17,17,17,.62);
+  margin: 8px 0;
+}
+
+/* =========================
+   MAKLUMAT MAJLIS (SECTION 3)
+========================= */
+.info-header{
+  text-align: center;
+  letter-spacing: .30em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: clamp(14px, 3.6vw, 18px);
+  margin-top: 18px;
+  color: rgba(17,17,17,.78);
+}
+
+.info-single{ 
+  margin-top: 18px;
+  text-align: center;
+}
+
+.info-block{
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+.info-block:first-child{ border-top: 0; }
+
+.info-label{
+  font-family: var(--ui);
+  font-size: 11px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 6px;
+}
+.info-value{
+  font-family: var(--cg);
+  font-size: 16px;
+  line-height: 1.55;
+  color: rgba(17,17,17,.80);
+}
+.info-sub{
+  margin-top: 6px;
+  font-family: var(--cg);
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(17,17,17,.60);
+}
+
+.info-actions{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+/* =========================
+   Buttons
+========================= */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-family: var(--ui);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .02em;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+  user-select: none;
+}
+.btn:active{ transform: translateY(1px); }
+
+.btn-outline{
+  background: #fff;
+  border: 1px solid rgba(163,0,0,.22);
+  color: rgba(17,17,17,.78);
+}
+.btn-outline:hover{
+  border-color: rgba(163,0,0,.32);
+  box-shadow: 0 10px 24px rgba(163,0,0,.06);
+}
+
+.btn-solid{
+  background: var(--red);
+  border: 1px solid var(--red);
+  color: #fff;
+}
+.btn-solid:hover{
+  box-shadow: 0 12px 26px rgba(163,0,0,.20);
+}
+
+.btn-sm{
+  padding: 9px 12px;
+  font-size: 12px;
+  border-radius: 12px;
+}
+
+/* Default primary button in forms */
+.btn.w-full{
+  background: var(--red);
+  border: 1px solid var(--red);
+  color: #fff;
+}
+.btn.w-full:hover{ box-shadow: 0 12px 26px rgba(163,0,0,.20); }
+.btn:disabled{
+  opacity: .6;
+  cursor: not-allowed;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* =========================
+   RSVP (SECTION 5)
+========================= */
+.section-title{
+  text-align: center;
+  letter-spacing: .30em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: clamp(14px, 3.6vw, 18px);
+  margin-top: 18px;
+  color: rgba(17,17,17,.78);
+}
+
+.pill-row{
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.pill{
+  border-radius: 999px;
+  padding: 10px 12px;
+  border: 1px solid rgba(17,17,17,.12);
+  background: #fff;
+  font-family: var(--ui);
+  font-weight: 600;
+  font-size: 13px;
+  color: rgba(17,17,17,.72);
+  cursor: pointer;
+  transition: background .12s ease, border-color .12s ease, color .12s ease, box-shadow .12s ease;
+}
+.pill:hover{
+  border-color: rgba(163,0,0,.24);
+  box-shadow: 0 10px 22px rgba(163,0,0,.06);
+}
+.pill-active{
+  background: rgba(163,0,0,.08);
+  border-color: rgba(163,0,0,.30);
+  color: rgba(163,0,0,.95);
+}
+
+.form{
+  margin-top: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.label{
+  font-family: var(--ui);
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(17,17,17,.55);
+  margin-top: 6px;
+}
+
+.input{
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(17,17,17,.12);
+  padding: 12px 12px;
+  background: #fff;
+  font-family: var(--cg);
+  font-size: 16px;
+  color: rgba(17,17,17,.86);
+  transition: border-color .12s ease, box-shadow .12s ease;
+}
+.input:focus{
+  border-color: rgba(163,0,0,.28);
+  box-shadow: 0 0 0 4px rgba(163,0,0,.08);
+  outline: none;
+}
+.textarea{
+  min-height: 110px;
+  resize: vertical;
+}
+
+.form-msg{
+  font-family: var(--cg);
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(17,17,17,.70);
+}
+
+/* Honeypot (anti-spam) */
+.honeypot{
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+}
+
+/* =========================
+   Guestbook (SECTION 6)
+========================= */
+.guestbook-section .card{ padding-bottom: 22px; }
+
+.guestbook{
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+
+.guestbook-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.sub-title{
+  font-family: var(--cg);
+  font-size: 16px;
+  color: rgba(17,17,17,.78);
+}
+
+.guestbook-box{
+  border: 1px solid rgba(17,17,17,.10);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+}
+.guestbook-stream{
+  max-height: 280px;
+  overflow: auto;
+  padding: 10px;
+}
+.guest-line{
+  padding: 10px 10px;
+  border-bottom: 1px solid rgba(17,17,17,.08);
+}
+.guest-line:last-child{ border-bottom: 0; }
+
+.guest-name{
+  font-family: var(--ui);
+  text-align: center;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(17,17,17,.70);
+}
+.guest-msg{
+  margin-top: 6px;
+  text-align: center;
+  font-family: var(--cg);
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(17,17,17,.78);
+}
+
+/* =========================
+   Closing + Contact (SECTION 7)
+========================= */
+.thanks{
+  margin-top: 12px;
+  font-family: var(--cg);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: rgba(17,17,17,.72);
+}
+
+.contact-elegant{
+  margin-top: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.contact-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 12px;
+  border: 1px solid rgba(17,17,17,.10);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.contact-person{
+  font-family: var(--cg);
+  font-size: 16px;
+  color: rgba(17,17,17,.78);
+}
+
+.contact-link{
+  font-family: var(--ui);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .02em;
+  color: var(--red);
+}
+.contact-link:hover{ text-decoration: underline; text-underline-offset: 3px; }
+
+.footer{
+  margin-top: 14px;
+  opacity: .9;
+}
+
+/* =========================
+   Envelope Overlay
+========================= */
+.overlay{
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  transition: opacity .65s ease, visibility .65s ease;
+}
+.overlay.gone{
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Envelope mock */
+.envelope{
+  width: min(360px, calc(100vw - 40px));
+  height: 240px;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.env-body{
+  position: absolute;
+  inset: 22px 0 0 0;
+  margin: auto;
+  width: 100%;
+  height: 190px;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid rgba(17,17,17,.12);
+  box-shadow: 0 18px 42px rgba(0,0,0,.10);
+}
+
+.env-top{
+  position: absolute;
+  top: 22px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 100%;
+  height: 190px;
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, transparent 49.5%, rgba(17,17,17,.10) 50%, transparent 50.5%),
+    linear-gradient(225deg, transparent 49.5%, rgba(17,17,17,.10) 50%, transparent 50.5%),
+    #fff;
+  clip-path: polygon(0 0, 100% 0, 50% 55%);
+  opacity: .85;
+  pointer-events: none;
+}
+
+/* Seal */
+.seal{
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 140px;
+  height: 140px;
+  border-radius: 999px;
+  background: rgba(163,0,0,.08);
+  border: 1px solid rgba(163,0,0,.25);
+  box-shadow: 0 14px 30px rgba(163,0,0,.10);
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.seal:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 18px 38px rgba(163,0,0,.16);
+  background: rgba(163,0,0,.10);
+}
+.seal span{
+  font-family: var(--cg);
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  font-weight: 600;
+  font-size: 12px;
+  color: rgba(163,0,0,.95);
+  text-align: center;
+  padding: 0 14px;
+}
+
+.env-shadow{
+  position: absolute;
+  bottom: 0;
+  left: 12%;
+  right: 12%;
+  height: 18px;
+  background: radial-gradient(50% 100% at 50% 50%, rgba(0,0,0,.20), transparent 70%);
+  filter: blur(2px);
+  opacity: .45;
+}
+
+/* Optional “opening” micro-animation hook */
+.overlay.opening .seal{ transform: scale(.96); }
+
+/* =========================
+   Glitter Canvas
+========================= */
+#glitterCanvas{
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+  display: none; /* your JS shows it on open */
+}
+
+/* =========================
+   Floating Music Button
+========================= */
+.music-btn{
+  position: fixed;
+  right: 16px;
+  bottom: 92px; /* above bottom nav */
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  border: 1px solid rgba(17,17,17,.10);
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 16px 40px rgba(0,0,0,.10);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 700;
+  backdrop-filter: blur(6px);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.music-btn:hover{ box-shadow: 0 18px 46px rgba(0,0,0,.14); }
+.music-btn:active{ transform: translateY(1px); }
+.music-btn svg{
+  width: 22px;
+  height: 22px;
+  fill: rgba(163,0,0,.88);
+}
+.music-btn.is-playing{
+  border-color: rgba(163,0,0,.22);
+}
+
+/* =========================
+   Bottom Nav (Mobile)
+========================= */
+.bottom-nav{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 650;
+  background: rgba(255,255,255,.94);
+  border-top: 1px solid rgba(17,17,17,.10);
+  backdrop-filter: blur(8px);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+}
+
+.nav-btn{
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 8px 6px;
+  border-radius: 14px;
+  cursor: pointer;
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+  transition: background .12s ease;
+}
+.nav-btn:hover{ background: rgba(163,0,0,.06); }
+
+.nav-ico{ font-size: 18px; line-height: 1; }
+.nav-txt{
+  font-family: var(--ui);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(17,17,17,.62);
+}
+
+/* Prevent content hidden behind nav */
+main { padding-bottom: 84px; }
+
+/* =========================
+   Modals
+========================= */
+body.modal-open{ overflow: hidden; }
+
+.modal{
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  display: none;
+}
+.modal.is-open{ display: block; }
+
+.modal-backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.28);
+  backdrop-filter: blur(3px);
+}
+
+.modal-sheet{
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: min(520px, 100%);
+  border-radius: 22px 22px 0 0;
+  background: #fff;
+  border: 1px solid rgba(17,17,17,.10);
+  box-shadow: 0 -18px 55px rgba(0,0,0,.18);
+  overflow: hidden;
+}
+
+.modal-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px 16px 10px;
+  border-bottom: 1px solid rgba(17,17,17,.10);
+}
+.modal-head-center{
+  flex: 1;
+  text-align: center;
+  padding-left: 28px; /* balance close button */
+}
+
+.modal-title{
+  letter-spacing: .30em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: clamp(14px, 3.6vw, 18px);
+  color: rgba(17,17,17,.78);
+}
+.modal-sub, .modal-info{
+  font-family: var(--cg);
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.modal-info{
+  font-family: var(--cg);
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.modal-close{
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(17,17,17,.10);
+  background: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  color: rgba(17,17,17,.70);
+}
+.modal-close:hover{ border-color: rgba(163,0,0,.22); }
+
+.modal-body{
+  padding: 14px 16px 18px;
+}
+
+.modal-card{
+  border: 1px solid rgba(17,17,17,.10);
+  border-radius: 18px;
+  padding: 14px;
+  background: #fff;
+}
+
+.modal-small{
+  font-family: var(--cg);
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(17,17,17,.70);
+}
+.modal-btn{ margin-top: 10px; width: 100%; }
+
+/* Doa box + gallery */
+.doa-box{
+  border: 1px solid rgba(17,17,17,.10);
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(163,0,0,.03);
+}
+.doa-text{
+  font-family: var(--amiri);
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(17,17,17,.80);
+  text-align: center;
+}
+
+.gallery-box{
+  margin-top: 12px;
+  border: 1px solid rgba(17,17,17,.10);
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+}
+.gallery-scroll{
+  padding: 10px;
+}
+.gallery-img{
+  width: 100%;
+  border-radius: 14px;
+}
+.wedding-tag{
+  margin-top: 10px;
+  text-align: center;
+  font-family: var(--cg);
+  font-size: 16px;
+  color: rgba(17,17,17,.74);
+}
+
+/* =========================
+   Small screens tweaks
+========================= */
+@media (max-width: 360px){
+  .card{ padding: 22px 18px; }
+  .couple-name{ letter-spacing: .20em; }
+}
+
+/* =========================
+   OPTIONAL: “First card style” helpers (if you later rebuild as text)
+   Use these classes if you ever replace cover image with real text.
+========================= */
+.firstcard-walima{
+  font-family: var(--cg);
+  letter-spacing: .42em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: clamp(14px, 3.6vw, 18px);
+  color: rgba(17,17,17,.78);
+}
+.firstcard-izin{
+  font-family: var(--cg);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: clamp(10px, 2.6vw, 12px);
+  color: rgba(17,17,17,.55);
+}
+.firstcard-name{
+  font-family: var(--cg);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: clamp(20px, 5.4vw, 30px);
+  color: rgba(17,17,17,.86);
+}
+.firstcard-amp{
+  font-family: var(--script);
+  font-size: clamp(30px, 8vw, 40px);
+  line-height: 1;
+  color: rgba(17,17,17,.72);
+}
+.firstcard-datetime{
+  font-family: var(--cg);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: clamp(12px, 3vw, 14px);
+  color: rgba(17,17,17,.60);
+}
+.firstcard-venue{
+  font-family: var(--cg);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: clamp(10px, 2.6vw, 12px);
+  color: rgba(17,17,17,.55);
+}
