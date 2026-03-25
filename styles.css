@@ -93,6 +93,7 @@ main { width: 100%; }
 .w-full{ width:100%; }
 .subtle{
   color: var(--muted);
+  text-align: center;
   margin-top: 18px;
   font-family: var(--ui);
   font-size: 12px;
@@ -396,6 +397,7 @@ main { width: 100%; }
 
 .label{
   font-family: var(--ui);
+  text-align: center;
   font-size: 11px;
   letter-spacing: .22em;
   text-transform: uppercase;
