@@ -897,11 +897,13 @@ body.modal-open{ overflow: hidden; }
   border-radius: 18px;
   padding: 14px;
   background: rgba(163,0,0,.03);
+  margin-bottom: 20px;
 }
 .doa-text{
   font-family: var(--amiri);
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.7;
+  font-style: italic;
   color: rgba(17,17,17,.80);
   text-align: center;
 }
@@ -922,6 +924,7 @@ body.modal-open{ overflow: hidden; }
 }
 .wedding-tag{
   margin-top: 10px;
+  margin-bottom: 10px;
   text-align: center;
   font-family: var(--cg);
   font-size: 16px;
