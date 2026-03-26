@@ -158,82 +158,112 @@ main { width: 100%; }
    - Venue ~ 6.3pt
    For web: use clamp() so it looks good on different phones.
 */
+.walima-card{
+  padding: 28px 24px 30px;
+}
+
 .walima-title{
-  margin-top: 18px;
+  margin-top: 8px;
+  margin-bottom: 10px;
   text-align: center;
-  letter-spacing: .30em;
+  font-family: var(--cg);
+  letter-spacing: .22em;
   text-transform: uppercase;
   font-weight: 500;
-  font-size: clamp(14px, 3.6vw, 18px);
-  color: rgba(17,17,17,.78);
+  font-size: clamp(16px, 4vw, 20px);
+  color: rgba(17,17,17,.82);
 }
 
 .walima-salam{
-  margin-top: 18px;
+  margin: 0 0 18px 0;
   text-align: center;
-  text-transform: uppercase;
   font-family: var(--cg);
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.65;
   color: rgba(17,17,17,.72);
 }
 
 .walima-invite{
-  margin-top: 5px;
+  margin-top: 12px;
   text-align: center;
   font-family: var(--cg);
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: 16px;
+  line-height: 1.6;
   color: rgba(17,17,17,.72);
 }
 
 .walima-parents{
   margin-top: 14px;
+  margin-bottom: 16px;
   text-align: center;
   font-family: var(--cg);
-  letter-spacing: .15em;
+  letter-spacing: .08em;
   text-transform: uppercase;
-  font-size: 13px;
+  font-size: 14px;
+  line-height: 1.7;
   color: rgba(17,17,17,.78);
 }
-.walima-parent{ 
+
+.walima-parent{
   margin: 6px 0;
   font-family: var(--cg);
   color: rgba(17,17,17,.86);
   font-weight: 500;
 }
+
 .walima-and{
+  margin: 6px 0;
   color: var(--red);
-  letter-spacing: .18em;
+  font-family: var(--script);
+  font-size: 24px;
+  line-height: 1;
 }
 
 .walima-to{
+  margin-top: 10px;
   text-align: center;
   font-family: var(--cg);
-  font-size: 15px;
+  font-size: 16px;
+  line-height: 1.55;
   color: rgba(17,17,17,.72);
 }
 
 .walima-couple{
-  margin-top: 20px;
+  margin-top: 10px;
   text-align: center;
-  padding-top: 10px;
+  padding: 5px 10px;
+  background: rgba(163,0,0,0.03);
+  border-radius: 12px;
 }
+
 .couple-name{
   font-family: var(--cg);
-  letter-spacing: .10em;
+  letter-spacing: .06em;
   text-transform: uppercase;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 17px;
+  line-height: 1.45;
   color: rgba(17,17,17,.86);
-  margin: 5px 0;
-}
-.walima-with{
-  font-family: var(--cg);
-  font-size: 14px;
-  color: rgba(17,17,17,.62);
   margin: 8px 0;
 }
+
+.walima-with{
+  font-family: var(--cg);
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(163,0,0,0.8);
+  font-style: italic;
+  margin: 5px 0;
+}
+
+.walima-divider{
+  width: 300px;
+  height: 1px;
+  background: rgba(163,0,0,0.4);
+  margin: 4px auto 18px;
+}
+
+
 
 /* =========================
    MAKLUMAT MAJLIS (SECTION 3)
@@ -550,6 +580,29 @@ main { width: 100%; }
   margin-top: 14px;
   opacity: .9;
 }
+
+
+.music-card{
+  text-align: center;
+}
+
+.music-frame-wrap{
+  margin-top: 10px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(163,0,0,0.10);
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(0,0,0,.06);
+}
+
+.music-frame{
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 220px;
+  border: 0;
+}
+
 
 /* =========================
    Envelope Overlay
@@ -881,6 +934,22 @@ body.modal-open{ overflow: hidden; }
 @media (max-width: 360px){
   .card{ padding: 22px 18px; }
   .couple-name{ letter-spacing: .20em; }
+}
+
+@media (max-width: 390px){
+  .walima-card{
+    padding: 24px 18px 26px;
+  }
+
+  .couple-name{
+    font-size: 17px;
+    letter-spacing: .05em;
+  }
+
+  .walima-parents{
+    font-size: 13px;
+    letter-spacing: .06em;
+  }
 }
 
 /* =========================

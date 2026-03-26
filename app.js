@@ -4,6 +4,8 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyxLTuEHP66Bsc1
 const overlay = document.getElementById("envelopeOverlay");
 const openBtn = document.getElementById("openBtn");
 const mainContent = document.getElementById("mainContent");
+const musicBtn = document.getElementById("musicToggleBtn");
+const youtubePlayer = document.getElementById("youtubePlayer");
 
 // RSVP UI
 const btnHadir = document.getElementById("btnHadir");
@@ -20,100 +22,45 @@ openBtn.addEventListener("click", () => {
   overlay.classList.add("opening");
   document.getElementById("glitterCanvas").style.display = "block";
 
+  if (youtubePlayer && !youtubePlayer.src) {
+    youtubePlayer.src = youtubePlayer.dataset.src;
+  }
 
   setTimeout(() => {
-    overlay.classList.add("gone");   // ✅ add this
+    overlay.classList.add("gone");
     mainContent.classList.remove("hidden");
     initReveal();
-  }, 650); // match the CSS transition (650ms)
-});
-
-const bgMusic = document.getElementById("bgMusic");
-const musicBtn = document.getElementById("musicBtn");
-
-const ICON_SOUND_ON = `
-<svg viewBox="0 0 24 24" aria-hidden="true">
-  <path d="M3 10v4h4l5 4V6L7 10H3zm13.5 2c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-</svg>
-`;
-
-const ICON_SOUND_OFF = `
-<svg viewBox="0 0 24 24" aria-hidden="true">
-  <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zM19 12c0 .94-.2 1.82-.56 2.62l1.51 1.51C20.63 14.95 21 13.52 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v4h4l5 4v-6.73l4.25 4.25c-.68.53-1.47.93-2.25 1.19v2.06c1.33-.3 2.56-.92 3.59-1.77L19.73 21 21 19.73 4.27 3zM12 6l-1.59 1.27L12 8.86V6z"/>
-</svg>
-`;
-
-function setMusicUI(isPlaying){
-  musicBtn.classList.toggle("is-playing", isPlaying);
-  musicBtn.innerHTML = isPlaying ? ICON_SOUND_ON : ICON_SOUND_OFF;
-}
-
-function getSavedMusicPref(){
-  // default: music ON
-  const v = localStorage.getItem("invite_music_on");
-  return v === null ? true : v === "true";
-}
-
-function saveMusicPref(isOn){
-  localStorage.setItem("invite_music_on", String(isOn));
-}
-
-// Initial UI
-setMusicUI(getSavedMusicPref());
-
-// Start music after user opens invitation
-async function tryStartMusic(){
-  const wantOn = getSavedMusicPref();
-  if(!wantOn) {
-    bgMusic.pause();
-    bgMusic.muted = true;
-    setMusicUI(false);
-    return;
-  }
-
-  try{
-    bgMusic.muted = false;
-    bgMusic.volume = 0.6;
-    await bgMusic.play();
-    setMusicUI(true);
-  }catch(err){
-    // If play fails, keep it off visually
-    console.warn("Music play blocked:", err);
-    setMusicUI(false);
-  }
-}
-
-// When user taps the seal (your existing openBtn)
-openBtn.addEventListener("click", () => {
-  // your existing logic...
-  // after opening, start music:
-  tryStartMusic();
-});
-
-// Toggle button
-musicBtn.addEventListener("click", async () => {
-  const isPlaying = !bgMusic.paused && !bgMusic.muted;
-
-  if(isPlaying){
-    bgMusic.pause();
-    bgMusic.muted = true;
-    saveMusicPref(false);
-    setMusicUI(false);
-  }else{
-    saveMusicPref(true);
-    try{
-      bgMusic.muted = false;
-      bgMusic.volume = 0.6;
-      await bgMusic.play();
-      setMusicUI(true);
-    }catch(err){
-      console.warn("Music play blocked:", err);
-      setMusicUI(false);
-    }
-  }
+  }, 650);
 });
 
 
+
+let isMuted = false;
+
+function sendYTCommand(func) {
+  if (!youtubePlayer) return;
+
+  youtubePlayer.contentWindow.postMessage(
+    JSON.stringify({
+      event: "command",
+      func: func,
+      args: []
+    }),
+    "*"
+  );
+}
+
+musicBtn.addEventListener("click", () => {
+  if (isMuted) {
+    sendYTCommand("unMute");
+    musicBtn.textContent = "🔊";
+  } else {
+    sendYTCommand("mute");
+    musicBtn.textContent = "🔇";
+  }
+
+  isMuted = !isMuted;
+});
 
 // Reveal on scroll (nice premium feel)
 function initReveal(){
