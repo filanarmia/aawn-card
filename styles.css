@@ -610,101 +610,151 @@ main { width: 100%; }
 .overlay{
   position: fixed;
   inset: 0;
-  background: #fff;
-  display: grid;
-  place-items: center;
-  z-index: 1000;
-  transition: opacity .65s ease, visibility .65s ease;
-}
-.overlay.gone{
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  z-index: 9999;
+
+  /* Soft pink background */
+  background: radial-gradient(
+    circle at top,
+    rgba(163,0,0,.95),
+    rgba(163,0,0,.95)
+  );
+
+  
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Envelope mock */
+/* Full screen envelope */
 .envelope{
-  width: min(360px, calc(100vw - 40px));
-  height: 240px;
-  position: relative;
-  display: grid;
-  place-items: center;
+  position: relative;   /* FIX */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
+/* Left + right panels */
+.env-top,
 .env-body{
   position: absolute;
-  inset: 22px 0 0 0;
-  margin: auto;
-  width: 100%;
-  height: 190px;
-  border-radius: 18px;
-  background: #fff;
-  border: 1px solid rgba(17,17,17,.12);
-  box-shadow: 0 18px 42px rgba(0,0,0,.10);
+  top: 0;
+  height: 100%;
+  width: 50%;
+
+  /* Soft pink envelope paper */
+  background: rgba(143, 96, 96, 0.95);
+
+  z-index: 1;
 }
 
+/* slight shade difference like your screenshot */
 .env-top{
-  position: absolute;
-  top: 22px;
   left: 0;
+  filter: brightness(1.02);
+}
+
+/* Right flap */
+.env-body{
   right: 0;
-  margin: auto;
-  width: 100%;
-  height: 190px;
-  border-radius: 18px;
-  background:
-    linear-gradient(135deg, transparent 49.5%, rgba(17,17,17,.10) 50%, transparent 50.5%),
-    linear-gradient(225deg, transparent 49.5%, rgba(17,17,17,.10) 50%, transparent 50.5%),
-    #fff;
-  clip-path: polygon(0 0, 100% 0, 50% 55%);
-  opacity: .85;
+  filter: brightness(0.97);
+}
+
+/* Center fold line */
+.envelope::after{
+  content:"";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  transform: translateX(-1px);
+  background: rgba(176,140,78,0.25);
+  z-index: 2;
+}
+
+/* Seal Button */
+.seal{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 150px;
+  height: 150px;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.92);
+
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.18),
+    inset 0 0 0 10px rgba(176,140,78,0.12);
+
+  display: grid;
+  place-items: center;
+  text-align: center;
+
+  cursor: pointer;
+  padding: 14px;
+  z-index: 5;
+}
+
+.seal span{
+  font-family: "Cormorant Garamond", serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: rgba(176,140,78,0.90);
+}
+
+.seal small{
+  margin-top: 6px;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  color: rgba(120,90,40,0.55);
+}
+
+/* Soft shadow at bottom */
+.env-shadow{
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -40px;
+  height: 160px;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.35), rgba(0,0,0,0));
+  opacity: 0.55;
   pointer-events: none;
 }
 
-/* Seal */
-.seal{
-  position: relative;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 140px;
-  height: 140px;
-  border-radius: 999px;
-  background: rgba(163,0,0,.08);
-  border: 1px solid rgba(163,0,0,.25);
-  box-shadow: 0 14px 30px rgba(163,0,0,.10);
-  cursor: pointer;
-  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
-}
-.seal:hover{
-  transform: translateY(-1px);
-  box-shadow: 0 18px 38px rgba(163,0,0,.16);
-  background: rgba(163,0,0,.10);
-}
-.seal span{
-  font-family: var(--cg);
-  text-transform: uppercase;
-  letter-spacing: .18em;
-  font-weight: 600;
-  font-size: 12px;
-  color: rgba(163,0,0,.95);
-  text-align: center;
-  padding: 0 14px;
+/* ====== OPEN ANIMATION ====== */
+.overlay.opening .seal{
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition: 350ms ease;
 }
 
-.env-shadow{
-  position: absolute;
-  bottom: 0;
-  left: 12%;
-  right: 12%;
-  height: 18px;
-  background: radial-gradient(50% 100% at 50% 50%, rgba(0,0,0,.20), transparent 70%);
-  filter: blur(2px);
-  opacity: .45;
+.overlay.opening .env-top{
+  transform: translateX(-110%);
+  transition: 700ms cubic-bezier(.2,.9,.2,1);
 }
 
-/* Optional “opening” micro-animation hook */
-.overlay.opening .seal{ transform: scale(.96); }
+.overlay.opening .env-body{
+  transform: translateX(110%);
+  transition: 700ms cubic-bezier(.2,.9,.2,1);
+}
+
+.overlay.opening{
+  background: transparent;
+}
+
+.overlay.opening .env-shadow{
+  opacity: 0;
+  transition: 500ms ease;
+}
+
+/* Hide overlay after open (optional, with JS adding .gone) */
+.overlay.gone{
+  display: none;
+}
 
 /* =========================
    Glitter Canvas
@@ -930,6 +980,21 @@ body.modal-open{ overflow: hidden; }
   font-size: 16px;
   color: rgba(17,17,17,.74);
 }
+
+
+.info-map{
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.info-map-img{
+  width: 100%;
+  max-width: 200px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
 
 /* =========================
    Small screens tweaks
