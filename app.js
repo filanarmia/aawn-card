@@ -22,35 +22,28 @@ openBtn.addEventListener("click", () => {
   overlay.classList.add("opening");
   document.getElementById("glitterCanvas").style.display = "block";
 
-  if (youtubePlayer && !youtubePlayer.src) {
-    youtubePlayer.src = youtubePlayer.dataset.src;
-  }
+  sendYTCommand("playVideo");
+  sendYTCommand("unMute");
+  musicBtn.textContent = "🔊";
+  isMuted = false;
 
   setTimeout(() => {
     overlay.classList.add("gone");
     mainContent.classList.remove("hidden");
     initReveal();
-
-    // try auto-unmute after user interaction
-    setTimeout(() => {
-      sendYTCommand("unMute");
-      musicBtn.textContent = "🔊";
-      isMuted = false;
-    }, 1200);
-
   }, 650);
 });
 
-let isMuted = true;
+let isMuted = false;
 
-function sendYTCommand(func) {
-  if (!youtubePlayer) return;
+function sendYTCommand(func, args = []) {
+  if (!youtubePlayer || !youtubePlayer.contentWindow) return;
 
   youtubePlayer.contentWindow.postMessage(
     JSON.stringify({
       event: "command",
       func: func,
-      args: []
+      args: args
     }),
     "*"
   );
