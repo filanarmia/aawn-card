@@ -172,31 +172,31 @@
         <div class="subtle">Sila pilih kehadiran anda.</div>
 
         <div class="pill-row">
-          <button class="pill pill-active" id="btnHadir" type="button">Hadir</button>
+          <button class="pill" id="btnHadir" type="button">Hadir</button>
           <button class="pill" id="btnTidak" type="button">Tidak Hadir</button>
         </div>
-
 
         <form id="rsvpForm" class="form hidden">
           <label class="label">Nama</label>
           <input class="input" name="name" placeholder="Contoh: Encik Ahmad" required />
 
-          <label class="label">No. of Pax</label>
-          <select class="input" name="pax" required>
-            <option value="" selected disabled>Pilih</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
+          <div id="paxWrap">
+            <label class="label">No. of Pax</label>
+            <select class="input" name="pax" id="paxSelect">
+              <option value="" selected disabled>Pilih</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+
           <!-- Honeypot anti-spam (leave empty) -->
           <input class="honeypot" name="hp" autocomplete="off" tabindex="-1" />
+
           <button class="btn w-full" id="rsvpSubmitBtn" type="submit">Hantar</button>
           <div class="form-msg" id="rsvpMsg"></div>
         </form>
 
-        <div id="rsvpTidakMsg" class="hidden subtle center">
-          Terima kasih atas makluman. Semoga dipermudahkan urusan tuan/puan.
-        </div>
       </div>
     </section>
 

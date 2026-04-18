@@ -14,6 +14,8 @@ const rsvpForm = document.getElementById("rsvpForm");
 const rsvpMsg = document.getElementById("rsvpMsg");
 const rsvpTidakMsg = document.getElementById("rsvpTidakMsg");
 const rsvpSubmitBtn = document.getElementById("rsvpSubmitBtn");
+const paxWrap = document.getElementById("paxWrap");
+const paxSelect = document.getElementById("paxSelect");
 
 
 let rsvpStatus = null;
@@ -77,33 +79,28 @@ function initReveal(){
 btnHadir.addEventListener("click", () => {
   rsvpStatus = "Hadir";
 
-  // show form, hide "tidak hadir" msg
   rsvpForm.classList.remove("hidden");
-  rsvpTidakMsg.classList.add("hidden");
+  rsvpMsg.textContent = "";
 
-  // active pill styling
+  paxWrap.classList.remove("hidden");
+  paxSelect.required = true;
+
   btnHadir.classList.add("pill-active");
   btnTidak.classList.remove("pill-active");
 });
 
-
-btnTidak.addEventListener("click", async () => {
+btnTidak.addEventListener("click", () => {
   rsvpStatus = "Tidak Hadir";
 
-  // hide form, show message
-  rsvpForm.classList.add("hidden");
-  rsvpTidakMsg.classList.remove("hidden");
+  rsvpForm.classList.remove("hidden");
+  rsvpMsg.textContent = "";
 
-  // active pill styling
+  paxWrap.classList.add("hidden");
+  paxSelect.required = false;
+  paxSelect.value = "";
+
   btnTidak.classList.add("pill-active");
   btnHadir.classList.remove("pill-active");
-
-  // send "Tidak Hadir"
-  try{
-    await postJSON({ action:"rsvp", status:"Tidak Hadir", name:"", pax:"", hp:"" });
-  }catch(err){
-    console.warn(err);
-  }
 });
 
 
@@ -117,29 +114,50 @@ rsvpForm.addEventListener("submit", async (e) => {
   const pax  = (fd.get("pax") || "").toString().trim();
   const hp   = (fd.get("hp") || "").toString().trim();
 
+  if (!rsvpStatus) {
+    rsvpMsg.textContent = "Sila pilih Hadir atau Tidak Hadir.";
+    return;
+  }
 
-  if(!name){
+  if (!name) {
     rsvpMsg.textContent = "Sila isi nama.";
     return;
   }
 
-  if(!pax){
+  if (rsvpStatus === "Hadir" && !pax) {
     rsvpMsg.textContent = "Sila pilih No. of Pax.";
     return;
   }
 
-  // loading state
   rsvpSubmitBtn.disabled = true;
   rsvpSubmitBtn.textContent = "Menghantar...";
 
-  try{
-    await postJSON({ action:"rsvp", status:"Hadir", name, pax, hp });
-    rsvpMsg.textContent = "Terima kasih atas pengesahan. Jumpa anda di majlis nanti, insya-Allah.";
+  try {
+    await postJSON({
+      action: "rsvp",
+      status: rsvpStatus,
+      name,
+      pax: rsvpStatus === "Hadir" ? pax : "",
+      hp
+    });
+
+    if (rsvpStatus === "Hadir") {
+      rsvpMsg.textContent = "Terima kasih atas pengesahan. Jumpa anda di majlis nanti, insya-Allah.";
+    } else {
+      rsvpMsg.textContent = "Terima kasih atas makluman.";
+    }
+
     rsvpForm.reset();
-  }catch(err){
+
+    if (rsvpStatus === "Tidak Hadir") {
+      paxWrap.classList.add("hidden");
+      paxSelect.required = false;
+    }
+
+  } catch (err) {
     rsvpMsg.textContent = "Maaf, terdapat masalah. Cuba lagi.";
     console.error(err);
-  }finally{
+  } finally {
     rsvpSubmitBtn.disabled = false;
     rsvpSubmitBtn.textContent = "Hantar";
   }
